@@ -57,10 +57,10 @@ $(document).ready(function() {
         color: '#CFD8DC',
     });
     /* -- Switchery -- */
-    var night_mode = document.querySelector('.js-switch-night-mode');
+    /* var night_mode = document.querySelector('.js-switch-night-mode');
     var switchery = new Switchery(night_mode, { color: '#6e81dc', size: 'small' });
     var navigation_sidebar = document.querySelector('.js-switch-navigation-sidebar');
-    var switchery = new Switchery(navigation_sidebar, { color: '#6e81dc', size: 'small' });
+    var switchery = new Switchery(navigation_sidebar, { color: '#6e81dc', size: 'small' }); */
     /* -- Bootstrap Popover -- */
     $('[data-toggle="popover"]').popover();
     /* -- Bootstrap Tooltip -- */

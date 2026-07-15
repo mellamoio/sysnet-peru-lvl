@@ -8,7 +8,7 @@
         <title> @yield('title') </title>
 
         <!-- Fevicon -->
-        <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+        <link rel="shortcut icon" href="{{ asset('assets/images/sysnet-favicon.png') }}">
         <!-- Start CSS -->
         @yield('style')
         <link href="{{ asset('assets/plugins/switchery/switchery.min.css') }}" rel="stylesheet" type="text/css">
