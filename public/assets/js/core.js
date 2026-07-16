@@ -20,7 +20,7 @@ $(document).ready(function() {
         e.preventDefault();
         $(".infobar-notifications-sidebar-overlay").css({"background": "rgba(0,0,0,0.4)", "position": "fixed"});
         $("#infobar-notifications-sidebar").addClass("sidebarshow");
-    }); 
+    });
     $("#infobar-notifications-close").on("click", function(e) {
         e.preventDefault();
         $(".infobar-notifications-sidebar-overlay").css({"background": "transparent", "position": "initial"});
@@ -31,7 +31,7 @@ $(document).ready(function() {
         e.preventDefault();
         $(".infobar-settings-sidebar-overlay").css({"background": "rgba(0,0,0,0.4)", "position": "fixed"});
         $("#infobar-settings-sidebar").addClass("sidebarshow");
-    }); 
+    });
     $("#infobar-settings-close").on("click", function(e) {
         e.preventDefault();
         $(".infobar-settings-sidebar-overlay").css({"background": "transparent", "position": "initial"});
@@ -43,11 +43,11 @@ $(document).ready(function() {
         $("body").toggleClass("mobile-left");
         $(".menu-hamburger img").toggle();
     });
-    /* -- Menu Topbar Hamburger -- */    
+    /* -- Menu Topbar Hamburger -- */
     $(".topbar-toggle-hamburger").on("click", function(e) {
         e.preventDefault();
-        $("body").toggleClass("topbar-toggle-menu");        
-        $(".topbar-toggle-hamburger img").toggle();       
+        $("body").toggleClass("topbar-toggle-menu");
+        $(".topbar-toggle-hamburger img").toggle();
     });
     /* -- Menu Scrollbar -- */
     $('.vertical-menu').slimscroll({

@@ -4,7 +4,7 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <div class="mobile-logobar">
-                    <a href="{{ url('/') }}" class="mobile-logo"><img src="assets/images/SysnetPeru-logo.png"
+                    <a href="{{ url('/') }}" class="mobile-logo"><img src="{{ asset('assets/images/SysnetPeru-logo.png') }}"
                             class="img-fluid" alt="logo"></a>
                 </div>
                 <div class="mobile-togglebar">
@@ -12,9 +12,9 @@
                         <li class="list-inline-item">
                             <div class="topbar-toggle-icon">
                                 <a class="topbar-toggle-hamburger" href="javascript:void();">
-                                    <img src="assets/images/svg-icon/horizontal.svg"
+                                    <img src="{{ asset('assets/images/svg-icon/horizontal.svg') }}"
                                         class="img-fluid menu-hamburger-horizontal" alt="horizontal">
-                                    <img src="assets/images/svg-icon/verticle.svg"
+                                    <img src="{{ asset('assets/images/svg-icon/verticle.svg') }}"
                                         class="img-fluid menu-hamburger-vertical" alt="verticle">
                                 </a>
                             </div>
@@ -23,9 +23,9 @@
                             <div class="menubar">
                                 <a class="menu-hamburger navbar-toggle bg-transparent" href="javascript:void();"
                                     data-toggle="collapse" data-target="#navbar-menu" aria-expanded="true">
-                                    <img src="assets/images/svg-icon/collapse.svg"
+                                    <img src="{{asset('assets/images/svg-icon/collapse.svg')}}"
                                         class="img-fluid menu-hamburger-collapse" alt="collapse">
-                                    <img src="assets/images/svg-icon/close.svg" class="img-fluid menu-hamburger-close"
+                                    <img src="{{asset('assets/images/svg-icon/close.svg')}}" class="img-fluid menu-hamburger-close"
                                         alt="close">
                                 </a>
                             </div>
@@ -48,7 +48,7 @@
                             <li class="list-inline-item">
                                 <div class="logobar">
                                     <a href="{{ url('/') }}" class="logo logo-large"><img
-                                            src="assets/images/SysnetPeru-logo.png" class="img-fluid"
+                                            src="{{ asset('assets/images/SysnetPeru-logo.png') }}" class="img-fluid"
                                             alt="logo"></a>
                                 </div>
                             </li>
@@ -61,7 +61,7 @@
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" href="#" role="button" id="profilelink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                                src="assets/images/users/profile.svg" class="img-fluid"
+                                                src="{{ asset('assets/images/users/profile.svg') }}" class="img-fluid"
                                                 alt="profile"><span
                                                 class="feather icon-chevron-down live-icon"></span></a>
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profilelink">
@@ -77,7 +77,7 @@
                                                         <li class="list-inline-item"><a
                                                                 href="{{ route('profile.edit') }}"
                                                                 class="profile-icon"><img
-                                                                    src="assets/images/svg-icon/user.svg"
+                                                                    src="{{ asset('assets/images/svg-icon/user.svg') }}"
                                                                     class="img-fluid" alt="user"></a></li>
                                                         <li class="list-inline-item">
                                                             <form method="POST" action="{{ route('logout') }}">
@@ -85,7 +85,7 @@
                                                                 <a href="#"
                                                                     onclick="event.preventDefault();this.closest('form').submit();"
                                                                     class="profile-icon"><img
-                                                                        src="assets/images/svg-icon/logout.svg"
+                                                                        src="{{ asset('assets/images/svg-icon/logout.svg') }}"
                                                                         class="img-fluid" alt="logout"></a>
                                                             </form>
                                                         </li>
@@ -100,9 +100,9 @@
                                 <div class="menubar">
                                     <a class="menu-hamburger navbar-toggle bg-transparent" href="javascript:void();"
                                         data-toggle="collapse" data-target="#navbar-menu" aria-expanded="true">
-                                        <img src="assets/images/svg-icon/collapse.svg"
+                                        <img src="{{ asset('assets/images/svg-icon/collapse.svg') }}"
                                             class="img-fluid menu-hamburger-collapse" alt="collapse">
-                                        <img src="assets/images/svg-icon/close.svg"
+                                        <img src="{{ asset('assets/images/svg-icon/close.svg') }}"
                                             class="img-fluid menu-hamburger-close" alt="close">
                                     </a>
                                 </div>
@@ -127,13 +127,13 @@
                     <ul class="horizontal-menu">
                         <li class="scroll {{ request()->is('dashboard') ? 'active' : '' }}">
                             <a href="{{ url('/dashboard') }}">
-                                <img src="assets/images/svg-icon/dashboard.svg" class="img-fluid" alt="widgets">
+                                <img src="{{ asset('assets/images/svg-icon/dashboard.svg') }}" class="img-fluid" alt="widgets">
                                 <span>Dashboard</span>
                             </a>
                         </li>
                         <li class="dropdown">
                             <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="assets/images/svg-icon/user.svg" class="img-fluid"
+                                    src="{{ asset('assets/images/svg-icon/user.svg') }}" class="img-fluid"
                                     alt="user"><span>Usuarios</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route('users.index') }}"><i class="mdi mdi-circle"></i>Lista de
@@ -145,7 +145,7 @@
 
                         <li class="dropdown">
                             <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="assets/images/svg-icon/advanced.svg" class="img-fluid"
+                                    src="{{ asset('assets/images/svg-icon/advanced.svg') }}" class="img-fluid"
                                     alt="user"><span>Técnicos</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
@@ -157,7 +157,7 @@
 
                         <li class="dropdown">
                             <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="assets/images/svg-icon/ecommerce.svg" class="img-fluid"
+                                    src="{{ asset('assets/images/svg-icon/ecommerce.svg') }}" class="img-fluid"
                                     alt="user"><span>Clientes</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
@@ -169,7 +169,7 @@
 
                         <li class="dropdown">
                             <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="assets/images/svg-icon/components.svg" class="img-fluid"
+                                    src="{{ asset('assets/images/svg-icon/components.svg') }}" class="img-fluid"
                                     alt="user"><span>Proveedores</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
@@ -181,7 +181,7 @@
 
                         <li class="dropdown">
                             <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="assets/images/svg-icon/layouts.svg" class="img-fluid"
+                                    src="{{ asset('assets/images/svg-icon/layouts.svg') }}" class="img-fluid"
                                     alt="user"><span>Marca</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
@@ -193,7 +193,7 @@
 
                         <li class="dropdown">
                             <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="assets/images/svg-icon/widgets.svg" class="img-fluid"
+                                    src="{{ asset('assets/images/svg-icon/widgets.svg') }}" class="img-fluid"
                                     alt="user"><span>Modelo</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
@@ -205,7 +205,7 @@
 
                         <li class="dropdown">
                             <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="assets/images/svg-icon/basic.svg" class="img-fluid"
+                                    src="{{ asset('assets/images/svg-icon/basic.svg') }}" class="img-fluid"
                                     alt="user"><span>Productos</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
