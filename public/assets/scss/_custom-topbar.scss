@@ -1,4 +1,4 @@
-/*
+/* 
 -------------------------------
     : Custom - Topbar css :
 -------------------------------
@@ -10,7 +10,7 @@
     left: 0;
     border-bottom: 1px solid $border-color;
     .mobile-logobar {
-      display: inline-block;
+      display: inline-block;  
       img {
         width: 120px;
       }
@@ -27,7 +27,7 @@
                 display: none;
               }
           }
-      }
+      }      
       .menu-hamburger {
           img {
             filter: invert(0.62) sepia(1) saturate(4.5) hue-rotate(199deg);
@@ -35,13 +35,13 @@
             &.menu-hamburger-close {
               display: none;
             }
-          }
+          }          
       }
     }
 }
 .topbar {
     background-color: $topbar-bg-color;
-    padding: 22px 30px;
+    padding: 15px 30px;
     position: fixed;
     z-index: 10;
     left: 0;
@@ -84,7 +84,7 @@
     }
     .togglebar {
       display: inline-block;
-      padding-top: 1px;
+      padding-top: 1px;      
     }
     .infobar {
       display: inline-block;
@@ -142,7 +142,7 @@
           background-size: cover;
           background-position: center;
           margin-top: -12px;
-      }
+      }      
     }
     .menubar-toggle {
       display: none;
@@ -153,13 +153,13 @@
             &.menu-hamburger-close {
               display: none;
             }
-          }
+          }          
       }
-  }
+  }    
 }
 .breadcrumbbar {
-    padding: 30px 30px 0 30px;
-    margin-top: 144px;
+    padding: 30px 30px 0 30px;  
+    margin-top: 144px;  
     .page-title {
       font-size: 20px;
       color: $heading-color;
@@ -179,7 +179,7 @@
       .breadcrumb-item.active {
         color: $heading-color;
       }
-    }
+    }    
     .breadcrumb-item+.breadcrumb-item::before {
       content: "\F764";
       font: normal normal normal 24px/1 "Material Design Icons";
@@ -231,15 +231,15 @@
           filter: invert(0.62) sepia(1) saturate(4.5) hue-rotate(199deg);
         }
     }
-  }
-  .infobar-notifications-sidebar-body {
+  }  
+  .infobar-notifications-sidebar-body {      
       .nav {
         padding: 30px;
         border-bottom: 1px solid $border-color;
       }
       .nav-link {
         padding: 8px 14px;
-        border-radius: 0;
+        border-radius: 0;        
         color: $primary;
         background-color: $primary-rgba;
         &:hover {
@@ -249,7 +249,7 @@
       .nav-link.active {
           &:hover {
             background-color: $primary;
-          }
+          }          
       }
       .tab-content {
         padding: 15px 0;
@@ -365,11 +365,11 @@
           filter: invert(0.62) sepia(1) saturate(4.5) hue-rotate(199deg);
         }
     }
-  }
-  .infobar-settings-sidebar-body {
+  }  
+  .infobar-settings-sidebar-body {   
     .custom-color-setting {
       padding: 30px;
-    }
+    }   
     .custom-mode-setting {
         padding: 30px;
         border-top: 1px solid $border-color;;

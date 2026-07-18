@@ -43,6 +43,14 @@ class SysnetDataSeeder extends Seeder
                 'password' => Hash::make('123456'), // La contraseña se encripta aquí
                 'estado' => true,
             ],
+
+            [
+                'rol_id' => 2,
+                'name' => 'Operador 2 Sysnet',
+                'email' => 'operador2@example.com',
+                'password' => Hash::make('123456'), // La contraseña se encripta aquí
+                'estado' => true,
+            ],
         ]);
 
         // ... (Aquí está tu código anterior de Role y User) ...
