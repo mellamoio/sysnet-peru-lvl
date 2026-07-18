@@ -148,10 +148,10 @@
                                     src="{{ asset('assets/images/svg-icon/advanced.svg') }}" class="img-fluid"
                                     alt="user"><span>Técnicos</span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
+                                <li><a href="{{ route('tecnicos.index') }}"><i class="mdi mdi-circle"></i>Lista de
                                         Técnicos</a></li>
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Nuevo
-                                        Técnico</a></li>
+                                {{-- <li><a href="{{ route('tecnicos.create')}}"><i class="mdi mdi-circle"></i>Nuevo
+                                        Técnico</a></li> --}}
                             </ul>
                         </li>
 
@@ -160,10 +160,8 @@
                                     src="{{ asset('assets/images/svg-icon/ecommerce.svg') }}" class="img-fluid"
                                     alt="user"><span>Clientes</span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
+                                <li><a href="{{ route('clientes.index') }}"><i class="mdi mdi-circle"></i>Lista de
                                         Clientes</a></li>
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Nuevo
-                                        Cliente</a></li>
                             </ul>
                         </li>
 
@@ -172,34 +170,17 @@
                                     src="{{ asset('assets/images/svg-icon/components.svg') }}" class="img-fluid"
                                     alt="user"><span>Proveedores</span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
+                                <li><a href="{{ route('proveedores.index') }}"><i class="mdi mdi-circle"></i>Lista de
                                         Proveedores</a></li>
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Nuevo
-                                        Proveedor</a></li>
                             </ul>
                         </li>
 
                         <li class="dropdown">
                             <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
                                     src="{{ asset('assets/images/svg-icon/layouts.svg') }}" class="img-fluid"
-                                    alt="user"><span>Marca</span></a>
+                                    alt="user"><span>Marca y Modelos</span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
-                                        Marcas</a></li>
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Nueva
-                                        Marca</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown">
-                            <a href="javaScript:void();" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="{{ asset('assets/images/svg-icon/widgets.svg') }}" class="img-fluid"
-                                    alt="user"><span>Modelo</span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
-                                        Modelos</a></li>
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Nuevo
-                                        Modelo</a></li>
+                                <li><a href="{{ route('marcas_y_modelos.index') }}"><i class="mdi mdi-circle"></i>Listado</a></li>
                             </ul>
                         </li>
 
