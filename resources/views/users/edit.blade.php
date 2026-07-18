@@ -12,7 +12,7 @@
                 <h4 class="page-title">Usuarios</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{url('/')}}">Crear Usuario</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/')}}">Actualizar Usuario</a></li>
                     </ol>
                 </div>
             </div>
@@ -25,11 +25,11 @@
             <div class="col-lg-6">
                         <div class="card m-b-30">
                             <div class="card-header">
-                                <h5 class="card-title">Registro de Usuario</h5>
+                                <h5 class="card-title">Actualización de Usuario</h5>
                             </div>
                             <div class="card-body">
                                 <h6 class="card-subtitle">
-                                    Este es un formulario para crear un nuevo usuario. Por favor, complete todos los campos requeridos antes de enviar el formulario.
+                                    Este es un formulario para actualizar un usuario. Por favor, complete todos los campos requeridos antes de enviar el formulario.
                                 </h6>
                                 <form method="POST" action="{{ route('users.update', $user->id) }}">
                                     @csrf
