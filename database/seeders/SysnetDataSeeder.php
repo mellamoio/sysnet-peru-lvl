@@ -87,11 +87,11 @@ class SysnetDataSeeder extends Seeder
         ]);
 
         Modelo::insert([
-            ['marca_id' => 1, 'nombre' => 'FMB920'],
-            ['marca_id' => 1, 'nombre' => 'FMB125'],
-            ['marca_id' => 2, 'nombre' => 'DS-2CD1023'],
-            ['marca_id' => 3, 'nombre' => 'GV300'],
-            ['marca_id' => 4, 'nombre' => 'FM-Eco4'],
+            ['marca_id' => 1, 'nombre' => 'FMB920', 'url_imagen' => null],
+            ['marca_id' => 1, 'nombre' => 'FMB125', 'url_imagen' => null],
+            ['marca_id' => 2, 'nombre' => 'DS-2CD1023', 'url_imagen' => null],
+            ['marca_id' => 3, 'nombre' => 'GV300', 'url_imagen' => null],
+            ['marca_id' => 4, 'nombre' => 'FM-Eco4', 'url_imagen' => null],
         ]);
 
         // 5. ESTADOS Y TIPOS DE MOVIMIENTO

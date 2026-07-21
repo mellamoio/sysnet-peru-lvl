@@ -189,9 +189,9 @@
                                     src="{{ asset('assets/images/svg-icon/basic.svg') }}" class="img-fluid"
                                     alt="user"><span>Productos</span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Lista de
+                                <li><a href="{{ route('equipos.index') }}"><i class="mdi mdi-circle"></i>Lista de
                                         Productos</a></li>
-                                <li><a href="{{ url('../light-vertical') }}"><i class="mdi mdi-circle"></i>Nuevo
+                                <li><a href="{{ route('equipos.create') }}"><i class="mdi mdi-circle"></i>Nuevo
                                         Producto</a></li>
                             </ul>
                         </li>

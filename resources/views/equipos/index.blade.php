@@ -1,8 +1,12 @@
 @section('title')
-    Sysnet Perú - Lista de Técnicos
+    Sysnet Perú - Lista de Productos
 @endsection
 @extends('layouts.app')
 @section('style')
+    <!-- DataTables css -->
+    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Responsive Datatable css -->
+    <link href="{{ asset('assets/plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         /* Add your custom styles here */
         .container-fluid {
@@ -17,10 +21,10 @@
     <div class="breadcrumbbar">
         <div class="row align-items-center">
             <div class="col-md-8 col-lg-8">
-                <h4 class="page-title">Técnicos</h4>
+                <h4 class="page-title">Productos</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('tecnicos.index') }}">Lista de Técnicos</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('equipos.index') }}">Lista de Productos</a></li>
                     </ol>
                 </div>
             </div>
@@ -29,110 +33,78 @@
     <!-- End Breadcrumbbar -->
     <!-- Start Contentbar -->
     <div class="contentbar">
-        <!-- Start row -->
         <div class="row">
-            <div class="col-lg-4">
-                <div class="card m-b-30">
-                    <div class="card-header">
-                        <h5 class="card-title">Registro de Técnicos</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-subtitle">
-                            Este es un formulario para crear un nuevo técnico. Por favor, complete todos los campos
-                            requeridos antes de enviar el formulario.
-                        </h6>
-                        <form method="POST" action="{{ route('tecnicos.store') }}">
-                            @csrf
-                            @if ($errors->any())
-                                <div class="alert alert-danger mb-3">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                            <div class="form-group">
-                                <label for="nombre">Nombre</label>
-                                <input type="text" class="form-control" required name="nombre" id="nombre"
-                                    aria-describedby="NombreHelp" placeholder="Jesús Arroyo">
-                            </div>
-                            <div class="form-group">
-                                <label for="dni">DNI / CE</label>
-                                <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                    class="form-control" required maxlength="12" name="dni" id="dni"
-                                    aria-describedby="DniHelp" placeholder="12345678">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telefono">Teléfono</label>
-                                <input type="tel"
-                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
-                                    class="form-control" required maxlength="9" name="telefono" id="telefono"
-                                    aria-describedby="TelefonoHelp" placeholder="987654321">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="estado">Estado de Técnico</label>
-                                <select class="form-control" name="estado" id="estado" required>
-                                    <option value="">Seleccione un estado</option>
-                                    <option value="1">Activo</option>
-                                    <option value="0">Inactivo</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Registrar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
             <!-- Start col -->
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card m-b-30">
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-12">
-                                <h5 class="card-title mb-0">Todos los técnicos</h5>
+                                <h5 class="card-title mb-0">Todos los Equipos</h5>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-borderless">
+                            <table id="default-datatable" class="table table-borderless">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>DNI</th>
-                                        <th>Teléfono</th>
+                                        <th>Modelo</th>
+                                        <th>IMEI</th>
                                         <th>Estado</th>
+                                        <th>Disponibilidad</th>
+                                        <th>Observación</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tecnicos as $tecnico)
+                                    @foreach ($equipos as $equipo)
                                         <tr>
                                             <td>#{{ $loop->iteration }}</td>
-                                            <td>{{ $tecnico->nombre }}</td>
-                                            <td>{{ $tecnico->dni }}</td>
-                                            <td>{{ $tecnico->telefono }}</td>
                                             <td>
-                                                @if ($tecnico->estado == 1)
-                                                    <span class="badge badge-success">Activo</span>
+                                                @if (!$equipo->modelo->url_imagen)
+                                                    <img src="{{ asset('assets/images/ui-images/image-rounded.jpg') }}"
+                                                        width="100" loading="lazy" class="rounded" />
                                                 @else
-                                                    <span class="badge badge-danger">Inactivo</span>
+                                                    <img src="{{ asset('storage/' . $equipo->modelo->url_imagen) }}"
+                                                        width="100" loading="lazy" class="rounded" />
+                                                @endif
+                                            </td>
+                                            <td>{!! DNS1D::getBarcodeSVG($equipo->imei, 'C128', 2, 40) !!}</td>
+                                            <td>
+                                                @if ($equipo->estado->id == 1)
+                                                    <span class="badge badge-success">{{ $equipo->estado->nombre }}</span>
+                                                @elseif ($equipo->estado->id == 2)
+                                                    <span class="badge badge-warning">{{ $equipo->estado->nombre }}</span>
+                                                @else
+                                                    <span class="badge badge-danger">{{ $equipo->estado->nombre }}</span>
                                                 @endif
                                             </td>
                                             <td>
+                                                @if (!$equipo->disponible)
+                                                    <span class="alert alert-danger" role="alert"><i class="feather icon-x-circle"></i> No disponible</span>
+                                                @else
+                                                    <span class="alert alert-success" role="alert"><i class="feather icon-check-square"></i> Disponible</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    {!! $equipo->observaciones ?? '<span class="text-muted">Sin observaciones</span>' !!}
+                                                </div>
+                                            </td>
+                                            <td>
                                                 <div class="button-list">
-                                                    <a href="{{ route('tecnicos.edit', $tecnico->id) }}"
+                                                    <a href="{{ route('equipos.show', $equipo->id) }}"
+                                                        class="btn btn-primary-rgba"><i class="feather icon-eye"></i></a>
+
+                                                    <a href="{{ route('equipos.edit', $equipo->id) }}"
                                                         class="btn btn-success-rgba"><i class="feather icon-edit-2"></i></a>
 
                                                     <button type="button" class="btn btn-danger-rgba btn-delete-user"
                                                         data-toggle="modal" data-target="#deleteUserModal"
-                                                        data-url="{{ route('tecnicos.destroy', $tecnico->id) }}"
-                                                        data-name="{{ $tecnico->nombre }}">
+                                                        data-url="{{ route('equipos.destroy', $equipo->id) }}"
+                                                        data-name="{{ $equipo->imei }}">
                                                         <i class="feather icon-trash"></i>
                                                     </button>
                                                 </div>
@@ -146,9 +118,7 @@
                 </div>
             </div>
             <!-- End col -->
-
         </div>
-        <!-- End row -->
     </div>
     <!-- End Contentbar -->
     <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog">
@@ -170,7 +140,7 @@
                     </div>
 
                     <div class="modal-body">
-                        ¿Deseas eliminar al técnico
+                        ¿Deseas eliminar el producto
                         <strong id="userName"></strong>?
                     </div>
 
@@ -191,6 +161,13 @@
     </div>
 @endsection
 @section('script')
+    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/custom-table-datatable.js') }}"></script>
+
     <!-- Pnotify js -->
     <script src="{{ asset('assets/plugins/pnotify/js/pnotify.custom.min.js') }}"></script>
     <script src="{{ asset('assets/js/custom/custom-pnotify.js') }}"></script>

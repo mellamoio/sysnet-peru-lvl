@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('marca_id')->constrained('marcas');
             $table->string('nombre', 80);
+            $table->string('url_imagen')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -7,6 +7,8 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\ModeloController;
+use App\Http\Controllers\EquipoController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +67,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/modelos/{modelo}/edit', [ModeloController::class, 'edit'])->name('modelos.edit');
     Route::put('/modelos/{modelo}', [ModeloController::class, 'update'])->name('modelos.update');
     Route::delete('/modelos/{modelo}', [ModeloController::class, 'destroy'])->name('modelos.destroy');
+
+    #Equipos
+    # Users
+    Route::get('/equipos', [EquipoController::class, 'index'])->name('equipos.index');
+    Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create');
+    Route::get('/equipos/descargar-plantilla', [EquipoController::class, 'descargarPlantilla'])->name('equipos.plantilla');
+    Route::post('/equipos', [EquipoController::class, 'store'])->name('equipos.store');
+    Route::post('/equipos-batch', [EquipoController::class, 'storeBatch'])->name('equipos.store_batch');
+    Route::post('/equipos-excel', [EquipoController::class, 'importExcel'])->name('equipos.import_excel');
+    Route::get('/equipos/{equipo}', [EquipoController::class, 'show'])->name('equipos.show');
+    Route::get('/equipos/{equipo}/edit', [EquipoController::class, 'edit'])->name('equipos.edit');
+    Route::put('/equipos/{equipo}', [EquipoController::class, 'update'])->name('equipos.update');
+    Route::delete('/equipos/{equipo}', [EquipoController::class, 'destroy'])->name('equipos.destroy');
 });
 
 require __DIR__.'/auth.php';

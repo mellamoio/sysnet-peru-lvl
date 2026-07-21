@@ -12,7 +12,7 @@
                 <h4 class="page-title">Técnicos</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Actualizar Técnico</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tecnicos.edit') }}">Actualizar Técnico</a></li>
                     </ol>
                 </div>
             </div>

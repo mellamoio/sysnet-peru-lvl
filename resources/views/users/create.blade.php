@@ -12,7 +12,7 @@
                 <h4 class="page-title">Usuarios</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Crear Usuario</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('users.create') }}">Crear Usuario</a></li>
                     </ol>
                 </div>
             </div>

@@ -20,7 +20,7 @@
                 <h4 class="page-title">Usuarios</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Lista de Usuarios</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Lista de Usuarios</a></li>
                     </ol>
                 </div>
             </div>
@@ -144,7 +144,7 @@
     <script>
         $(function() {
 
-            $('.btn-delete-user').on('click', function() {
+            $(document).on('click', '.btn-delete-user', function() {
 
                 let url = $(this).data('url');
                 let nombre = $(this).data('name');

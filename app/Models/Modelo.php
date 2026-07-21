@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Modelo extends Model
 {
+    use SoftDeletes;
     protected $table = 'modelos';
-    protected $fillable = ['marca_id', 'nombre'];
+    protected $fillable = ['marca_id', 'nombre', 'url_imagen'];
 
-    public function marca() { return $this->belongsTo(Marca::class); }
+    public function marca() { return $this->belongsTo(Marca::class)->withTrashed(); }
 }

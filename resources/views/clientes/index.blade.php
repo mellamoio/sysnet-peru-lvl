@@ -24,7 +24,7 @@
                 <h4 class="page-title">Clientes</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Lista de Clientes</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('clientes.index') }}">Lista de Clientes</a></li>
                     </ol>
                 </div>
             </div>
@@ -216,7 +216,7 @@
     <script>
         $(function() {
 
-            $('.btn-delete-user').on('click', function() {
+            $(document).on('click', '.btn-delete-user', function() {
 
                 let url = $(this).data('url');
                 let nombre = $(this).data('name');
