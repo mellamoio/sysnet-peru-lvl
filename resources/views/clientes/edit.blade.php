@@ -12,7 +12,7 @@
                 <h4 class="page-title">Clientes</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Actualizar Clientes</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('clientes.edit') }}">Actualizar Clientes</a></li>
                     </ol>
                 </div>
             </div>
