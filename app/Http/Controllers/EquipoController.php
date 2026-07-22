@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PlantillaEquiposExport;
 use App\Imports\EquiposImport;
 use App\Models\Equipo;
 use App\Models\EstadoEquipo;
 use App\Models\Modelo;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
-use App\Exports\PlantillaEquiposExport;
 
 class EquipoController extends Controller
 {
@@ -19,9 +21,11 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        $equipos = Equipo::with('estado', 'modelo.marca')->inRandomOrder()->get();
+        $modelos = Modelo::all();
+        $estadosEquipo = EstadoEquipo::all();
+        $equipos = Equipo::with('estado', 'modelo.marca', 'tipoProducto')->inRandomOrder()->get();
 
-        return view('equipos.index', compact('equipos'));
+        return view('equipos.index', compact('equipos', 'modelos', 'estadosEquipo'));
         // return $equipos;
     }
 
@@ -160,30 +164,70 @@ class EquipoController extends Controller
      */
     public function show(Equipo $equipo)
     {
+        $equipo->load(['estado', 'modelo.marca', 'modelo.tipoProducto']);
         return view('equipos.show', compact('equipo'));
+    }
+
+    public function descargarPdf(Equipo $equipo)
+    {
+
+        $equipo->load(['estado', 'modelo.marca', 'modelo.tipoProducto']);
+
+        $pdf = Pdf::loadView('equipos.pdf', compact('equipo'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('ficha_equipo_'.$equipo->imei.'.pdf');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Equipo $equipo)
     {
-        //
+        return $equipo;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Equipo $equipo)
     {
-        //
+        $validatedData = $request->validate([
+            'imei' => [
+                'required',
+                'numeric',
+                'digits_between:14,18',
+                Rule::unique('equipos', 'imei')->ignore($equipo->id),
+            ],
+            'modelo_id' => 'required|exists:modelos,id',
+            'estado_id' => 'required|exists:estados_equipos,id',
+            'disponible' => 'required|boolean',
+            'observaciones' => 'nullable|string',
+        ], [
+            'imei.required' => 'El número de IMEI es obligatorio.',
+            'imei.numeric' => 'El IMEI solo debe contener números.',
+            'imei.digits_between' => 'El IMEI debe tener entre 14 y 18 dígitos.',
+            'imei.unique' => 'Este número de IMEI ya se encuentra registrado en otro equipo.',
+            'modelo_id.required' => 'Debe seleccionar un modelo de equipo.',
+            'modelo_id.exists' => 'El modelo seleccionado no existe.',
+            'estado_id.required' => 'Debe seleccionar el estado del equipo.',
+            'disponible.required' => 'Debe indicar la disponibilidad del equipo.',
+        ]);
+
+        $equipo->update($validatedData);
+
+        return redirect()->route('equipos.index')
+            ->with('success', 'Equipo actualizado correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Equipo $equipo)
     {
-        //
+        $equipo->delete();
+
+        return redirect()->route('equipos.index')
+            ->with('success', 'Equipo eliminado correctamente.');
     }
 }

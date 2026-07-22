@@ -33,6 +33,7 @@ class ModeloController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'marca_id' => 'required|exists:marcas,id',
+            'tipo_producto_id' => 'required|exists:tipo_productos,id',
             'url_imagen' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -46,6 +47,7 @@ class ModeloController extends Controller
         Modelo::create([
             'nombre' => $request->nombre,
             'marca_id' => $request->marca_id,
+            'tipo_producto_id' => $request->tipo_producto_id,
             'url_imagen' => $rutaImagen, // O 'url_imagen' según el nombre de tu columna en BD
         ]);
 
@@ -120,6 +122,7 @@ class ModeloController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'marca_id' => 'required|exists:marcas,id',
+            'tipo_producto_id' => 'required|exists:tipo_productos,id',
             'url_imagen' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -142,6 +145,7 @@ class ModeloController extends Controller
         $modelo->update([
             'nombre' => $request->nombre,
             'marca_id' => $request->marca_id,
+            'tipo_producto_id' => $request->tipo_producto_id,
             'url_imagen' => $rutaImagen,
         ]);
 

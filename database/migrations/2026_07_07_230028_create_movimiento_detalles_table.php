@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('movimiento_detalles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('movimiento_id')->constrained('movimientos');
+            $table->foreignId('movimiento_id')->constrained('movimientos')->cascadeOnDelete();
             $table->foreignId('equipo_id')->constrained('equipos');
-            $table->foreignId('estado_anterior')->constrained('estados_equipos');
-            $table->foreignId('estado_nuevo')->constrained('estados_equipos');
+            $table->foreignId('estado_anterior')->nullable()->constrained('estados_equipos');
+            $table->foreignId('estado_nuevo')->nullable()->constrained('estados_equipos');
             $table->timestamps();
         });
     }

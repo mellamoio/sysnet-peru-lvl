@@ -3,6 +3,8 @@
 @endsection
 @extends('layouts.app')
 @section('style')
+    <!-- Pnotify css -->
+    <link href="{{ asset('assets/plugins/pnotify/css/pnotify.custom.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('rightbar-content')
     <!-- Start Breadcrumbbar -->
@@ -12,7 +14,8 @@
                 <h4 class="page-title">Clientes</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('clientes.edit') }}">Actualizar Clientes</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('clientes.edit', $cliente) }}">Actualizar Clientes</a>
+                        </li>
                     </ol>
                 </div>
             </div>
@@ -46,26 +49,28 @@
                             @endif
                             <div class="form-group">
                                 <label for="razon_social">Razon Social</label>
-                                <input type="text" value="{{ $cliente->razon_social }}" class="form-control" required name="razon_social" id="razon_social"
-                                    aria-describedby="RazonSocialHelp" placeholder="Sysnet del Perú SAC">
+                                <input type="text" value="{{ $cliente->razon_social }}" class="form-control" required
+                                    name="razon_social" id="razon_social" aria-describedby="RazonSocialHelp"
+                                    placeholder="Sysnet del Perú SAC">
                             </div>
                             <div class="form-group">
                                 <label for="ruc">RUC</label>
-                                <input type="text" value="{{ $cliente->ruc }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                    class="form-control" required maxlength="11" name="ruc" id="ruc"
-                                    aria-describedby="RucHelp" placeholder="1234567891">
+                                <input type="text" value="{{ $cliente->ruc }}"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="form-control" required
+                                    maxlength="11" name="ruc" id="ruc" aria-describedby="RucHelp"
+                                    placeholder="1234567891">
                             </div>
 
                             <div class="form-group">
                                 <label for="direccion">Dirección</label>
-                                <input type="text" value="{{ $cliente->direccion }}" class="form-control" required name="direccion" id="direccion"
-                                    aria-describedby="DireccionHelp" placeholder="Av. Santa Rosa 529">
+                                <input type="text" value="{{ $cliente->direccion }}" class="form-control" required
+                                    name="direccion" id="direccion" aria-describedby="DireccionHelp"
+                                    placeholder="Av. Santa Rosa 529">
                             </div>
 
                             <div class="form-group">
                                 <label for="telefono">Teléfono</label>
-                                <input type="tel"
-                                    value="{{ $cliente->telefono }}"
+                                <input type="tel" value="{{ $cliente->telefono }}"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
                                     class="form-control" required maxlength="9" name="telefono" id="telefono"
                                     aria-describedby="TelefonoHelp" placeholder="987654321">
@@ -89,4 +94,18 @@
     </div>
 @endsection
 @section('script')
+    <!-- Pnotify js -->
+    <script src="{{ asset('assets/plugins/pnotify/js/pnotify.custom.min.js') }}"></script>
+
+    @if (session('error'))
+        <script>
+            $(document).ready(function() {
+                new PNotify({
+                    title: '¡Lo siento!',
+                    text: "{{ session('error') }}", // Usamos comillas dobles aquí por seguridad
+                    type: 'danger',
+                });
+            });
+        </script>
+    @endif
 @endsection

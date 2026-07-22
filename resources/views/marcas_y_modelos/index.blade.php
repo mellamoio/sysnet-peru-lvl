@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="card m-b-30">
                             <div class="card-header">
                                 <h5 class="card-title">Registro de Marcas</h5>
@@ -62,13 +62,13 @@
                                         </div>
                                     @endif
                                     <div class="form-group">
-                                        <label for="nombre">Razon Social</label>
+                                        <label for="nombre">Razon Social:</label>
                                         <input type="text" class="form-control" required name="nombre" id="nombre"
                                             aria-describedby="NombreHelp" placeholder="Telefónica">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="estado">Estado de la Marca</label>
+                                        <label for="estado">Estado de la Marca:</label>
                                         <select class="form-control" name="estado" id="estado" required>
                                             <option value="">Seleccione un estado</option>
                                             <option value="1">Activo</option>
@@ -81,7 +81,46 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                <h5 class="card-title">Registro de Tipo de Producto</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-subtitle">
+                                    Este es un formulario para crear un nuevo tipo de producto. Por favor, complete todos los campos
+                                    requeridos antes de enviar el formulario.
+                                </h6>
+                                <form method="POST" action="{{ route('tipo-productos.store') }}">
+                                    @csrf
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger mb-3">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre:</label>
+                                        <input type="text" class="form-control" required name="nombre" id="nombre"
+                                            aria-describedby="NombreHelp" placeholder="Cámara Go Pro">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="descripcion">Descripción del Tipo de Producto:</label>
+                                        <textarea id="descripcion" required name="descripcion" class="form-control"></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 mb-3">
                         <div class="card m-b-30">
                             <div class="card-header">
                                 <div class="row align-items-center">
@@ -142,6 +181,65 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-12">
+                                        <h5 class="card-title mb-0">Todos los Tipos de Productos</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless datatable-special">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th>Descripción</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($tiposProducto as $producto)
+                                                <tr>
+                                                    <td>#{{ $loop->iteration }}</td>
+                                                    <td>{{ $producto->nombre }}</td>
+                                                    <td>
+                                                        <p>
+                                                            {{ $producto->descripcion }}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="button-list">
+                                                            <button type="button"
+                                                                class="btn btn-success-rgba btn-edit-tipoProducto"
+                                                                data-toggle="modal" data-target="#editTipoProductoModal"
+                                                                data-id="{{ $producto->id }}"
+                                                                data-nombre="{{ $producto->nombre }}"
+                                                                data-descripcion="{{ $producto->descripcion }}"
+                                                                data-url="{{ route('tipo-productos.update', $producto->id) }}">
+                                                                <i class="feather icon-edit-2"></i>
+                                                            </button>
+
+                                                            <button type="button"
+                                                                class="btn btn-danger-rgba btn-delete-user"
+                                                                data-toggle="modal" data-target="#deleteUserModal"
+                                                                data-url="{{ route('tipo-productos.destroy', $producto->id) }}"
+                                                                data-name="{{ $producto->nombre }}">
+                                                                <i class="feather icon-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -171,7 +269,7 @@
                                     @endif
 
                                     <div class="form-group">
-                                        <label for="nombre_modelo">Nombre</label>
+                                        <label for="nombre_modelo">Código</label>
                                         <input type="text" class="form-control" required name="nombre"
                                             id="nombre_modelo" placeholder="Ej. FMB920">
                                     </div>
@@ -182,6 +280,17 @@
                                             <option value="">Seleccione una Marca</option>
                                             @foreach ($marcas as $marca)
                                                 <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tipo_producto_id">Tipo de Producto / Categoría</label>
+                                        <select name="tipo_producto_id" id="tipo_producto_id" class="form-control"
+                                            required>
+                                            <option value="">Seleccione un tipo</option>
+                                            @foreach ($tiposProducto as $tipo)
+                                                <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -252,8 +361,9 @@
                                                                 data-toggle="modal" data-target="#editModeloModal"
                                                                 data-id="{{ $modelo->id }}"
                                                                 data-nombre="{{ $modelo->nombre }}"
-                                                                data-marca="{{ $modelo->marca->id }}"
-                                                                data-img="{{ $modelo->url_imagen ? asset('storage/' . $modelo->url_imagen) : asset('assets/images/ui-images/image-rounded.jpg')}}"
+                                                                data-marca="{{ $modelo->marca_id }}"
+                                                                data-tipoproducto="{{ $modelo->tipo_producto_id }}"
+                                                                data-img="{{ $modelo->url_imagen ? asset('storage/' . $modelo->url_imagen) : asset('assets/images/ui-images/image-rounded.jpg') }}"
                                                                 data-url="{{ route('modelos.update', $modelo->id) }}">
                                                                 <i class="feather icon-edit-2"></i>
                                                             </button>
@@ -382,6 +492,58 @@
     </div>
 
     <!-- Modal de Marca -->
+    <div class="modal fade" id="editTipoProductoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <form id="editTipoProductoForm" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Editar Tipo de Productos
+                        </h5>
+
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label>Nombre</label>
+
+                            <input type="text" class="form-control" name="nombre" id="edit_nombreTipoProducto" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea class="form-control" id="edit_descripcionTipoProducto" name="descripcion" required></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            Guardar cambios
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Marca -->
     <div class="modal fade" id="editModeloModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -403,7 +565,7 @@
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label>Nombre</label>
+                            <label>Código</label>
 
                             <input type="text" class="form-control" name="nombre" id="edit_nombreModelo" required>
                         </div>
@@ -415,6 +577,18 @@
 
                                 @foreach ($marcas as $marca)
                                     <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo de Producto / Categoría</label>
+
+                            <select class="form-control" name="tipo_producto_id" id="edit_tipoModelo" required>
+
+                                @foreach ($tiposProducto as $tipo)
+                                    <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
                                 @endforeach
 
                             </select>
@@ -495,13 +669,25 @@
                 $('#editMarcaForm').attr('action', url);
             });
 
+            $(document).on('click', '.btn-edit-tipoProducto', function() {
+                let id = $(this).data('id');
+                let nombreTipoProducto = $(this).data('nombre');
+                let descripcionTipoProducto = $(this).data('descripcion');
+                $('#edit_nombreTipoProducto').val(nombreTipoProducto);
+                $('#edit_descripcionTipoProducto').val(descripcionTipoProducto);
+                let urlTipoProducto = $(this).data('url');
+                $('#editTipoProductoForm').attr('action', urlTipoProducto);
+            });
+
             $(document).on('click', '.btn-edit-modelo', function() {
                 let idModelo = $(this).data('id');
                 let nombreModelo = $(this).data('nombre');
                 let marcaModelo = $(this).data('marca');
+                let edit_tipoModelo = $(this).data('tipoproducto');
                 let imgModel = $(this).data('img')
                 $('#edit_nombreModelo').val(nombreModelo);
                 $('#edit_marcaModelo').val(marcaModelo);
+                $('#edit_tipoModelo').val(edit_tipoModelo)
                 $('#editImg').attr('src', imgModel);
                 let urlModelo = $(this).data('url');
                 $('#editModeloForm').attr('action', urlModelo);

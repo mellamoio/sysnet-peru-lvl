@@ -50,6 +50,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Tipo de Producto</th>
                                         <th>Modelo</th>
                                         <th>IMEI</th>
                                         <th>Estado</th>
@@ -62,6 +63,7 @@
                                     @foreach ($equipos as $equipo)
                                         <tr>
                                             <td>#{{ $loop->iteration }}</td>
+                                            <td>{{ $equipo->tipoProducto->nombre }}</td>
                                             <td>
                                                 @if (!$equipo->modelo->url_imagen)
                                                     <img src="{{ asset('assets/images/ui-images/image-rounded.jpg') }}"
@@ -83,9 +85,11 @@
                                             </td>
                                             <td>
                                                 @if (!$equipo->disponible)
-                                                    <span class="alert alert-danger" role="alert"><i class="feather icon-x-circle"></i> No disponible</span>
+                                                    <span class="alert d-block alert-danger text-center" role="alert"><i
+                                                            class="feather icon-x-circle"></i> No disponible</span>
                                                 @else
-                                                    <span class="alert alert-success" role="alert"><i class="feather icon-check-square"></i> Disponible</span>
+                                                    <span class="alert d-block alert-success text-center" role="alert"><i
+                                                            class="feather icon-check-square"></i> Disponible</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -98,8 +102,12 @@
                                                     <a href="{{ route('equipos.show', $equipo->id) }}"
                                                         class="btn btn-primary-rgba"><i class="feather icon-eye"></i></a>
 
-                                                    <a href="{{ route('equipos.edit', $equipo->id) }}"
-                                                        class="btn btn-success-rgba"><i class="feather icon-edit-2"></i></a>
+                                                    <button type="button" class="btn btn-success-rgba btn-edit-producto"
+                                                        data-toggle="modal" data-target="#editProductoModal"
+                                                        data-id="{{ $equipo->id }}"
+                                                        data-url="{{ route('equipos.update', $equipo->id) }}">
+                                                        <i class="feather icon-edit-2"></i>
+                                                    </button>
 
                                                     <button type="button" class="btn btn-danger-rgba btn-delete-user"
                                                         data-toggle="modal" data-target="#deleteUserModal"
@@ -159,6 +167,85 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal de Producto -->
+    <div class="modal fade" id="editProductoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <form id="editProductoForm" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Editar Producto
+                        </h5>
+
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="edit_imei">IMEI</label>
+                            <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                class="form-control" required name="imei" id="edit_imei" aria-describedby="ImeiHelp"
+                                placeholder="123451848118545434">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_modelo_id">Modelo</label>
+                            <select class="form-control" name="modelo_id" id="edit_modelo_id" required>
+                                <option value="">Seleccione un modelo</option>
+                                @foreach ($modelos as $modelo)
+                                    <option value="{{ $modelo->id }}">{{ $modelo->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_estado_id">Estado del producto</label>
+                            <select class="form-control" name="estado_id" id="edit_estado_id" required>
+                                <option value="">Seleccione un estado</option>
+                                @foreach ($estadosEquipo as $estado)
+                                    <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_disponible">Disponibilidad</label>
+                            <select class="form-control" name="disponible" id="edit_disponible" required>
+                                <option value="">Seleccione un estado</option>
+                                <option value="1">Disponible</option>
+                                <option value="0">No Disponible</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_observaciones">Observaciones</label>
+                            <textarea class="form-control" name="observaciones" id="edit_observaciones"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            Guardar cambios
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -185,6 +272,47 @@
 
             });
 
+            $(document).on('click', '.btn-edit-producto', function() {
+                let id = $(this).data('id');
+                let url = $(this).data('url');
+
+                // getProducto retorna la petición AJAX y .done se ejecuta cuando la respuesta llega
+                getProducto(id).done(function(dataProduct) {
+                    console.log('Producto recibido:', dataProduct);
+
+                    if (dataProduct) {
+                        // Asignamos los valores a los inputs del modal
+                        $('#edit_imei').val(dataProduct.imei);
+                        $('#edit_modelo_id').val(dataProduct.modelo_id);
+                        $('#edit_estado_id').val(dataProduct.estado_id);
+                        $('#edit_disponible').val(Number(dataProduct.disponible));
+
+                        // Si observaciones usa Summernote
+                        if ($('#edit_observaciones').next('.note-editor').length) {
+                            $('#edit_observaciones').summernote('code', dataProduct.observaciones ||
+                                '');
+                        } else {
+                            $('#edit_observaciones').val(dataProduct.observaciones);
+                        }
+
+                        // Actualizamos el action del formulario para el Update
+                        $('#editProductoForm').attr('action', url);
+                    }
+                }).fail(function(xhr, status, error) {
+                    console.error('Error al obtener la información del producto:', error);
+                });
+            });
+
+            // La función solo RETORNA el $.ajax
+            function getProducto(id) {
+                let urlData = "{{ route('equipos.edit', ':id') }}".replace(':id', id);
+
+                return $.ajax({
+                    url: urlData,
+                    type: 'GET',
+                    dataType: 'json'
+                });
+            }
         });
     </script>
 

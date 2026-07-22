@@ -12,6 +12,7 @@ use App\Models\Cliente;
 use App\Models\Proveedor;
 use App\Models\Marca;
 use App\Models\Modelo;
+use App\Models\TipoProducto;
 use App\Models\EstadoEquipo;
 use App\Models\TipoMovimiento;
 use App\Models\Equipo;
@@ -78,6 +79,12 @@ class SysnetDataSeeder extends Seeder
             ['razon_social' => 'Hikvision Peru', 'ruc' => '20587412369', 'telefono' => '999444222'],
         ]);
 
+        TipoProducto::insert([
+            ['nombre' => 'GPS Tracker', 'descripcion' => 'Dispositivos de rastreo vehicular'],
+            ['nombre' => 'Cámara / Dashcam', 'descripcion' => 'Cámaras de video vigilancia'],
+            ['nombre' => 'Alineador', 'descripcion' => 'Equipos de alineación'],
+        ]);
+
         // 4. MARCAS Y MODELOS
         Marca::insert([
             ['nombre' => 'Teltonika'],
@@ -87,11 +94,11 @@ class SysnetDataSeeder extends Seeder
         ]);
 
         Modelo::insert([
-            ['marca_id' => 1, 'nombre' => 'FMB920', 'url_imagen' => null],
-            ['marca_id' => 1, 'nombre' => 'FMB125', 'url_imagen' => null],
-            ['marca_id' => 2, 'nombre' => 'DS-2CD1023', 'url_imagen' => null],
-            ['marca_id' => 3, 'nombre' => 'GV300', 'url_imagen' => null],
-            ['marca_id' => 4, 'nombre' => 'FM-Eco4', 'url_imagen' => null],
+            ['marca_id' => 1, 'tipo_producto_id' => 1, 'nombre' => 'FMB920', 'url_imagen' => null], // GPS
+            ['marca_id' => 1, 'tipo_producto_id' => 1, 'nombre' => 'FMB125', 'url_imagen' => null], // GPS
+            ['marca_id' => 2, 'tipo_producto_id' => 2, 'nombre' => 'DS-2CD1023', 'url_imagen' => null], // Cámara
+            ['marca_id' => 3, 'tipo_producto_id' => 1, 'nombre' => 'GV300', 'url_imagen' => null], // GPS
+            ['marca_id' => 4, 'tipo_producto_id' => 1, 'nombre' => 'FM-Eco4', 'url_imagen' => null], // GPS
         ]);
 
         // 5. ESTADOS Y TIPOS DE MOVIMIENTO

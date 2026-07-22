@@ -7,8 +7,11 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\MovimientoController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -63,13 +66,17 @@ Route::middleware('auth')->group(function () {
     Route::put('/marcas/{marca}', [MarcaController::class, 'update'])->name('marcas.update');
     Route::delete('/marcas/{marca}', [MarcaController::class, 'destroy'])->name('marcas.destroy');
 
+    Route::post('/tipo-productos', [TipoProductoController::class, 'store'])->name('tipo-productos.store');
+    Route::get('/tipo-productos/{tipoProducto}/edit', [TipoProductoController::class, 'edit'])->name('tipo-productos.edit');
+    Route::put('/tipo-productos/{tipoProducto}', [TipoProductoController::class, 'update'])->name('tipo-productos.update');
+    Route::delete('/tipo-productos/{tipoProducto}', [TipoProductoController::class, 'destroy'])->name('tipo-productos.destroy');
+
     Route::post('/modelos', [ModeloController::class, 'store'])->name('modelos.store');
     Route::get('/modelos/{modelo}/edit', [ModeloController::class, 'edit'])->name('modelos.edit');
     Route::put('/modelos/{modelo}', [ModeloController::class, 'update'])->name('modelos.update');
     Route::delete('/modelos/{modelo}', [ModeloController::class, 'destroy'])->name('modelos.destroy');
 
     #Equipos
-    # Users
     Route::get('/equipos', [EquipoController::class, 'index'])->name('equipos.index');
     Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create');
     Route::get('/equipos/descargar-plantilla', [EquipoController::class, 'descargarPlantilla'])->name('equipos.plantilla');
@@ -77,9 +84,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/equipos-batch', [EquipoController::class, 'storeBatch'])->name('equipos.store_batch');
     Route::post('/equipos-excel', [EquipoController::class, 'importExcel'])->name('equipos.import_excel');
     Route::get('/equipos/{equipo}', [EquipoController::class, 'show'])->name('equipos.show');
+    Route::get('/equipos/{equipo}/pdf', [EquipoController::class, 'descargarPdf'])->name('equipos.pdf');
     Route::get('/equipos/{equipo}/edit', [EquipoController::class, 'edit'])->name('equipos.edit');
     Route::put('/equipos/{equipo}', [EquipoController::class, 'update'])->name('equipos.update');
     Route::delete('/equipos/{equipo}', [EquipoController::class, 'destroy'])->name('equipos.destroy');
+
+    #Movimientos
+    Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
+    Route::get('/movimientos/create', [MovimientoController::class, 'create'])->name('movimientos.create');
+    Route::post('/movimientos', [MovimientoController::class, 'store'])->name('movimientos.store');
+    Route::get('/movimientos/{movimiento}', [MovimientoController::class, 'show'])->name('movimientos.show');
+    Route::get('/movimientos/{movimiento}/edit', [MovimientoController::class, 'edit'])->name('movimientos.edit');
+    Route::put('/movimientos/{movimiento}', [MovimientoController::class, 'update'])->name('movimientos.update');
+    Route::delete('/movimientos/{movimiento}', [MovimientoController::class, 'destroy'])->name('movimientos.destroy');
 });
 
 require __DIR__.'/auth.php';

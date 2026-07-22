@@ -14,4 +14,16 @@ class Equipo extends Model
 
     public function modelo() { return $this->belongsTo(Modelo::class); }
     public function estado() { return $this->belongsTo(EstadoEquipo::class, 'estado_id'); }
+    public function tipoProducto()
+    {
+        // Accede al tipo de producto a través de la relación con Modelo
+        return $this->hasOneThrough(
+            TipoProducto::class,
+            Modelo::class,
+            'id',               // Clave primaria en modelos
+            'id',               // Clave primaria en tipo_productos
+            'modelo_id',        // Clave foránea en equipos
+            'tipo_producto_id'  // Clave foránea en modelos
+        );
+    }
 }

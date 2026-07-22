@@ -239,5 +239,15 @@
                 });
             });
         </script>
+    @else
+        <script>
+            $(document).ready(function() {
+                new PNotify({
+                    title: '¡Lo siento!',
+                    text: "{{ session('error') }}", // Usamos comillas dobles aquí por seguridad
+                    type: 'danger',
+                });
+            });
+        </script>
     @endif
 @endsection

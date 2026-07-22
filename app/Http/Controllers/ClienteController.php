@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Cliente;
+use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
@@ -11,9 +11,10 @@ class ClienteController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $clientes = Cliente::all();
-        //return $clientes;
+
+        // return $clientes;
         return view('clientes.index', compact('clientes'));
     }
 
@@ -35,20 +36,24 @@ class ClienteController extends Controller
             'ruc' => 'required|string|max:11|unique:clientes,ruc',
             'direccion' => 'required|string|max:255',
             'telefono' => 'required|string|max:9',
-            'estado' => 'boolean'
+            'estado' => 'boolean',
         ]);
 
-        Cliente::create([
-            'razon_social' => $request->razon_social,
-            'ruc' => $request->ruc,
-            'direccion' => $request->direccion,
-            'telefono' => $request->telefono,
-            'estado' => $request->boolean('estado'),
-        ]);
+        try {
+            Cliente::create([
+                'razon_social' => $request->razon_social,
+                'ruc' => $request->ruc,
+                'direccion' => $request->direccion,
+                'telefono' => $request->telefono,
+                'estado' => $request->boolean('estado'),
+            ]);
 
+            return redirect()->route('clientes.index')
+                ->with('success', 'Cliente creado correctamente.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Ocurrió un error al registrar al cliente: '.$e->getMessage());
+        }
 
-        return redirect()->route('clientes.index')
-                         ->with('success', 'Cliente creado correctamente.');
     }
 
     /**
@@ -74,25 +79,28 @@ class ClienteController extends Controller
     {
         $request->validate([
             'razon_social' => 'required|string|max:255',
-            'ruc' => 'required|string|max:11|unique:clientes,ruc,' . $cliente->id,
+            'ruc' => 'required|string|max:11|unique:clientes,ruc,'.$cliente->id,
             'direccion' => 'required|string|max:255',
             'telefono' => 'required|string|max:9',
-            'estado' => 'boolean'
+            'estado' => 'boolean',
         ]);
 
+        try {
+            $data = [
+                'razon_social' => $request->razon_social,
+                'ruc' => $request->ruc,
+                'direccion' => $request->direccion,
+                'telefono' => $request->telefono,
+                'estado' => $request->boolean('estado'),
+            ];
 
-        $data = [
-            'razon_social' => $request->razon_social,
-            'ruc' => $request->ruc,
-            'direccion' => $request->direccion,
-            'telefono' => $request->telefono,
-            'estado' => $request->boolean('estado'),
-        ];
+            $cliente->update($data);
 
-        $cliente->update($data);
-
-        return redirect()->route('clientes.index')
-                         ->with('success', 'Cliente actualizado correctamente.');
+            return redirect()->route('clientes.index')
+                ->with('success', 'Cliente actualizado correctamente.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Ocurrió un error al actualizar al cliente: '.$e->getMessage());
+        }
     }
 
     /**
@@ -103,6 +111,6 @@ class ClienteController extends Controller
         $cliente->delete();
 
         return redirect()->route('clientes.index')
-                         ->with('success', 'Cliente eliminado correctamente.');
+            ->with('success', 'Cliente eliminado correctamente.');
     }
 }

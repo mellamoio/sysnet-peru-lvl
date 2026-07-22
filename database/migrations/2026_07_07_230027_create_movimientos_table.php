@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('movimientos', function (Blueprint $table) {
             $table->id(); // Equivale a BIGINT AUTO_INCREMENT
-            $table->dateTime('fecha')->useCurrent();
+            $table->dateTime('fecha_movimiento')->useCurrent();
             $table->foreignId('tipo_movimiento_id')->constrained('tipos_movimientos');
             $table->foreignId('usuario_id')->constrained('users');
 
@@ -24,6 +24,8 @@ return new class extends Migration
 
             $table->string('numero_documento', 80)->nullable();
             $table->text('observaciones')->nullable();
+            $table->string('ruta_documento')->nullable();
+            
             $table->timestamps();
         });
     }

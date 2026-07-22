@@ -12,7 +12,7 @@
                 <h4 class="page-title">Proveedores</h4>
                 <div class="breadcrumb-list">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('proveedores.edit') }}">Actualizar Proveedores</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('proveedores.edit', $proveedor) }}">Actualizar Proveedores</a></li>
                     </ol>
                 </div>
             </div>

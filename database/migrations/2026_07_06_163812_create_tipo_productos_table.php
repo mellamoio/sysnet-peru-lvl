@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('modelos', function (Blueprint $table) {
+        Schema::create('tipo_productos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('marca_id')->constrained('marcas');
-            $table->foreignId('tipo_producto_id')->nullable()->constrained('tipo_productos')->nullOnDelete();
-            $table->string('nombre', 80);
-            $table->string('url_imagen')->nullable();
+            $table->string('nombre'); // ej: GPS, Alineador, Cámara Web, Sensor
+            $table->text('descripcion')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('modelos');
+        Schema::dropIfExists('tipo_productos');
     }
 };
